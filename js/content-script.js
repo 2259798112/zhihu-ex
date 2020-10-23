@@ -4,8 +4,11 @@ if (document.location.href.startsWith('https://www.zhihu.com/question')) {
     view_day();
 }
 if (document.location.href.startsWith('https://www.zhihu.com/search')) {
-	let sid = setInterval(function(){clearInterval(sid);listenChanged()},1000)    
-    
+    let sid = setInterval(function () {
+        clearInterval(sid);
+        listenChanged()
+    }, 1000)
+
 }
 
 function listenChanged() {
@@ -13,10 +16,10 @@ function listenChanged() {
     const targetNode = document.querySelector('#SearchMain > div > div > div');
 
     // 观察器的配置（需要观察什么变动）
-    const config = { childList: true, subtree: true };
+    const config = {childList: true, subtree: true};
 
     // 当观察到变动时执行的回调函数
-    const callback = function(mutationsList, observer) {
+    const callback = function (mutationsList, observer) {
 
         // Use traditional 'for loops' for IE 11
         for (let mutation of mutationsList) {
@@ -35,7 +38,9 @@ function listenChanged() {
 }
 
 function view_day() {
-	if (document.querySelector('#root > div > main > div > meta:nth-child(6)') == null) {return;}
+    if (document.querySelector('#root > div > main > div > meta:nth-child(6)') == null) {
+        return;
+    }
     let dateCreated = document.querySelector('#root > div > main > div > meta:nth-child(6)').content;
     let dateTimestamp = new Date(dateCreated).valueOf(); //1603251465000
     let days = (new Date().valueOf() - dateTimestamp) / (1000 * 60 * 60 * 24);
@@ -44,7 +49,9 @@ function view_day() {
     console.log(hours);
 
     let cs_view = '#root > div > main > div > div:nth-child(10) > div:nth-child(2) > div > div.QuestionHeader-content > div.QuestionHeader-side > div > div > div > div:nth-child(2) > div > strong';
-    if (document.querySelector(cs_view) == null) {return;}
+    if (document.querySelector(cs_view) == null) {
+        return;
+    }
     let viewCount = document.querySelector(cs_view).title;
     console.log(viewCount);
 
@@ -79,21 +86,22 @@ function appendHtml(elem, value) {
 }
 
 
-
 // 接收来自后台的消息
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log('收到来自 ' + (sender.tab ? "content-script(" + sender.tab.url + ")" : "popup或者background") + ' 的消息：', request);
-    if (request.cmd == 'sim') {
+    if (request.cmd == 'iBtnQuestionInfo') {
+        questionInfo(request.list);
+        sendResponse('我收到你的消息了：' + JSON.stringify(request));
+
+    } else if (request.cmd == 'sim') {
         sim();
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
 
-    } else
-    if (request.cmd == 'tag') {
+    } else if (request.cmd == 'tag') {
         tag();
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
 
-    } else
-    if (request.cmd == 'iBtnReplace') {
+    } else if (request.cmd == 'iBtnReplace') {
         replaceGoodcard();
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
     } else {
@@ -145,13 +153,13 @@ function score(json) {
 
 function postJson(url, obj, parse) {
     fetch(url, {
-            method: 'post',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(obj)
-        })
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+    })
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(response => {
@@ -169,7 +177,9 @@ function tag() {
             let spanA = document.createElement('span');
             spanA.setAttribute("class", "Button Button--red");
             spanA.innerText = A;
-            if (AnswerItemList[i].querySelector('.Button--red') === null) { AnswerItemList[i].querySelector('.ContentItem-title').firstChild.prepend(spanA); }
+            if (AnswerItemList[i].querySelector('.Button--red') === null) {
+                AnswerItemList[i].querySelector('.ContentItem-title').firstChild.prepend(spanA);
+            }
         }
     }
     let ArticleItemList = document.querySelectorAll(".ArticleItem");
@@ -178,7 +188,9 @@ function tag() {
             let spanP = document.createElement('span');
             spanP.setAttribute("class", "Button Button--green");
             spanP.innerText = P;
-            if (ArticleItemList[i].querySelector('.Button--green') === null) { ArticleItemList[i].querySelector('.ContentItem-title').prepend(spanP); }
+            if (ArticleItemList[i].querySelector('.Button--green') === null) {
+                ArticleItemList[i].querySelector('.ContentItem-title').prepend(spanP);
+            }
         }
     }
 }
@@ -190,7 +202,7 @@ function copyStringToClipboard(str) {
     var el = document.createElement("textarea");
     el.value = str;
     el.setAttribute("readonly", "");
-    el.style = { position: "absolute", left: "-9999px" };
+    el.style = {position: "absolute", left: "-9999px"};
     document.body.appendChild(el);
 
     el.select();
@@ -220,4 +232,13 @@ function replaceGoodcard() {
         item.append(a);
 
     }
+}
+
+
+function questionInfo(list) {
+    let url = 'http://dutil.top:9001/zhihu/search/info';
+    let obj = list;
+    postJson(url, obj, function (res) {
+        console.log(res);
+    })
 }

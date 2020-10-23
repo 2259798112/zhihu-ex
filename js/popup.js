@@ -10,6 +10,10 @@ $('#iBtnTag').click(e => {
 $('#iBtnReplace').click(e => {
 	sendMessageToContentScript({cmd:'iBtnReplace'}, null)
 });
+//相似度检查
+$('#iBtnQuestionInfo').click(e => {
+	sendMessageToContentScript({cmd:'iBtnQuestionInfo',list:[19550546,19550629,19550657,19550835,19550845,19550859,19550943]}, null)
+});
 
 // 监听来自content-script的消息
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
