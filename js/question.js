@@ -70,6 +70,11 @@ function parseInitData(json,id) {
 function questionInfoTag(ele,key, value) {
     let span_day = document.createElement("span");
     span_day.setAttribute('class','Button Button--blue');
+    if (key === '回答' && value < 5){
+        span_day.setAttribute('class','Button Button--red');
+    }
+
+
     span_day.innerText = key +' : '+ value;
 
     ele.append(span_day);
