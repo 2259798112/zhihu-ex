@@ -90,7 +90,7 @@ function appendHtml(elem, value) {
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log('收到来自 ' + (sender.tab ? "content-script(" + sender.tab.url + ")" : "popup或者background") + ' 的消息：', request);
     if (request.cmd == 'iBtnQuestionInfo') {
-        questionInfo(request.list);
+        qInfo();
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
 
     } else if (request.cmd == 'sim') {
@@ -232,13 +232,4 @@ function replaceGoodcard() {
         item.append(a);
 
     }
-}
-
-
-function questionInfo(list) {
-    let url = 'http://dutil.top:9001/zhihu/search/info';
-    let obj = list;
-    postJson(url, obj, function (res) {
-        console.log(res);
-    })
 }
