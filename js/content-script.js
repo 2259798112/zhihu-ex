@@ -175,7 +175,7 @@ function tag() {
     if (AnswerItemList != null) {
         for (let i = AnswerItemList.length - 1; i >= 0; i--) {
             let spanA = document.createElement('span');
-            spanA.setAttribute("class", "Button Button--red");
+            spanA.setAttribute("class", "Button--red");
             spanA.innerText = A;
             if (AnswerItemList[i].querySelector('.Button--red') === null) {
                 AnswerItemList[i].querySelector('.ContentItem-title').firstChild.prepend(spanA);
@@ -186,7 +186,7 @@ function tag() {
     if (ArticleItemList !== null) {
         for (let i = ArticleItemList.length - 1; i >= 0; i--) {
             let spanP = document.createElement('span');
-            spanP.setAttribute("class", "Button Button--green");
+            spanP.setAttribute("class", "Button--green");
             spanP.innerText = P;
             if (ArticleItemList[i].querySelector('.Button--green') === null) {
                 ArticleItemList[i].querySelector('.ContentItem-title').prepend(spanP);
