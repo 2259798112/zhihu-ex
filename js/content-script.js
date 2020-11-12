@@ -1,4 +1,5 @@
 ﻿console.log('这是content script!');
+var dropArr = [];
 
 if (document.location.href.startsWith('https://www.zhihu.com/question')) {
     view_day();
@@ -89,19 +90,66 @@ function appendHtml(elem, value) {
 // 接收来自后台的消息
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log('收到来自 ' + (sender.tab ? "content-script(" + sender.tab.url + ")" : "popup或者background") + ' 的消息：', request);
-    if (request.cmd == 'iBtnQuestionInfo') {
+    if (request.cmd === 'iBtnQuestionInfo') {
         qInfo();
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
 
-    } else if (request.cmd == 'sim') {
+    } else if (request.cmd === 'iBtnBaiduDrop') {
+
+        lsc('#form', () => {
+            dropArr = [];
+            let drs = document.querySelector('#form > div > ul');
+            if (drs !== null) {
+                drs.childNodes.forEach(item => {
+                    let kw = item.getAttribute('data-key');
+                    console.log(kw);
+                    if (dropArr.indexOf(kw) < 0) {
+                        dropArr.push(kw);
+                    }
+                })
+            }
+        });
+        sendResponse('我收到你的消息了：' + JSON.stringify(request));
+
+    } else if (request.cmd === 'iBtnBaiduDropMobile') {
+        dropArr = [];
+        let cs = '#index-box > div > div.suggest-panel > div.suggest-content';
+        lsc(cs, () => {
+            let drs = document.querySelector(cs).querySelectorAll('button');
+            if (drs !== null) {
+                drs.forEach(item => {
+                    console.log(item.innerText)
+                    if (dropArr.indexOf(item.innerText) < 0) {
+                        dropArr.push(item.innerText);
+                    }
+                })
+            }
+        });
+        sendResponse('我收到你的消息了：' + JSON.stringify(request));
+
+    } else if (request.cmd === 'iBtnBaiduDropCSV') {
+
+        console.log("download 下拉词 csv");
+        let content = dropArr.join("\n");
+        downLoad(content, "下拉词.csv");
+        sendResponse('我收到你的消息了：' + JSON.stringify(request));
+
+    } else if (request.cmd === 'iBtnBaiduDropCSVMobile') {
+
+        console.log("download Mobile 下拉词 csv");
+        let content = dropArr.join("\n");
+        downLoad(content, "Mobile下拉词.csv");
+        sendResponse('我收到你的消息了：' + JSON.stringify(request));
+
+    } else if (request.cmd === 'sim') {
         sim();
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
 
-    } else if (request.cmd == 'tag') {
+    } else if (request.cmd === 'tag') {
         tag();
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
 
-    } else if (request.cmd == 'iBtnReplace') {
+    } else if (request.cmd === 'iBtnReplace') {
         replaceGoodcard();
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
     } else {
@@ -196,6 +244,35 @@ function tag() {
 }
 
 
+function lsc(cs, parse) {
+    console.log(lsc, cs);
+
+    // 选择需要观察变动的节点
+    const targetNode = document.querySelector(cs);
+
+
+    // 观察器的配置（需要观察什么变动）
+    const config = {characterData: true, attributes: true, childList: true, subtree: true,};
+
+    // 当观察到变动时执行的回调函数
+    const callback = function (mutationsList, observer) {
+        // Use traditional 'for loops' for IE 11
+        console.log('callback');
+
+        for (let mutation of mutationsList) {
+            console.log(mutation.type);
+            parse();
+        }
+    };
+
+    // 创建一个观察器实例并传入回调函数
+    const observer = new MutationObserver(callback);
+
+    // 以上述配置开始观察目标节点
+    observer.observe(targetNode, config);
+}
+
+
 //copy
 function copyStringToClipboard(str) {
 
@@ -233,3 +310,14 @@ function replaceGoodcard() {
 
     }
 }
+
+function downLoad(content, filename) {
+    var ele = document.createElement('a');
+    ele.download = filename;
+    ele.style.display = 'none';
+    var blob = new Blob([content]);
+    ele.href = URL.createObjectURL(blob);
+    document.body.appendChild(ele);
+    ele.click();
+    document.body.removeChild(ele);
+};

@@ -13,6 +13,20 @@ $('#iBtnReplace').click(e => {
 //相似度检查
 $('#iBtnQuestionInfo').click(e => {
 	sendMessageToContentScript({cmd:'iBtnQuestionInfo'}, null)
+});//相似度检查
+
+$('#iBtnBaiduDrop').click(e => {
+	sendMessageToContentScript({cmd:'iBtnBaiduDrop'}, null)
+});
+$('#iBtnBaiduDropCSV').click(e => {
+	sendMessageToContentScript({cmd:'iBtnBaiduDropCSV'}, null)
+});
+
+$('#iBtnBaiduDropMobile').click(e => {
+	sendMessageToContentScript({cmd:'iBtnBaiduDropMobile'}, null)
+});
+$('#iBtnBaiduDropCSVMobile').click(e => {
+	sendMessageToContentScript({cmd:'iBtnBaiduDropCSVMobile'}, null)
 });
 
 // 监听来自content-script的消息
