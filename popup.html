@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>popup页</title>
-	<meta charset="utf-8"/>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" href="css/bulma.min.css">
+    <title>popup页</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!--	<link rel="stylesheet" href="css/bulma.min.css">-->
+    <style type="text/css">
+        body {
+            width: 200px;
+        }
+    </style>
 </head>
 <body>
-	
-	<section class="section">
-    	<div class="container">
 
-      		<div class="buttons">
-			  <button class="button is-info" id="iBtnSim">相似度</button>
-			  <button class="button is-info" id="iBtnTag">类型标记</button>
-			  <button class="button is-info" id="iBtnReplace">替换</button>
-			  <button class="button is-info" id="iBtnQuestionInfo">问题详情</button>
-			</div>
-      		<div class="buttons">
-			  <button class="button is-info" id="iBtnBaiduDrop">百度下拉</button>
-			  <button class="button is-info" id="iBtnBaiduDropCSV">百度csv</button>
-			</div>
-			<div class="buttons">
-			  <button class="button is-info" id="iBtnBaiduDropMobile">百度M-下拉</button>
-			  <button class="button is-info" id="iBtnBaiduDropCSVMobile">百度M-csv</button>
-			</div>
-			
-    	</div>
-  	</section>
+<section class="section">
+    <div class="container">
 
-	<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
-	<script type="text/javascript" src="js/popup.js"></script>
+        <div class="buttons">
+            <button class="button is-info" id="iBtnSim">相似度</button>
+            <button class="button is-info" id="iBtnTag">类型标记</button>
+            <button class="button is-info" id="iBtnReplace">替换</button>
+            <button class="button is-info" id="iBtnQuestionInfo">问题详情</button>
+        </div>
+        <div class="buttons">
+            <button class="button is-info" id="iBtnBaiduDrop">百度下拉</button>
+            <button class="button is-info" id="iBtnBaiduDropCSV">百度csv</button>
+        </div>
+        <div class="buttons">
+            <button class="button is-info" id="iBtnBaiduDropMobile">百度M-下拉</button>
+            <button class="button is-info" id="iBtnBaiduDropCSVMobile">百度M-csv</button>
+        </div>
+
+    </div>
+</section>
+
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="js/popup.js"></script>
 </body>
 </html>

@@ -95,9 +95,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
 
     } else if (request.cmd === 'iBtnBaiduDrop') {
-
+        dropArr = [];
         lsc('#form', () => {
-            dropArr = [];
             let drs = document.querySelector('#form > div > ul');
             if (drs !== null) {
                 drs.childNodes.forEach(item => {
