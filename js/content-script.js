@@ -141,28 +141,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         lsc(cs, cs, dropListGoogle);
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
 
-    } else if (request.cmd === 'iBtnBaiduDropCSV') {
-
-        console.log("download 下拉词 csv");
-        let content = dropArr.join("\n");
-        downLoad(content, "下拉词.csv");
-        sendResponse('我收到你的消息了：' + JSON.stringify(request));
-
-    } else if (request.cmd === 'iBtnBaiduDropCSVMobile') {
-
-        console.log("download Mobile 下拉词 csv");
-        let content = dropArr.join("\n");
-        downLoad(content, "Mobile下拉词.csv");
-        sendResponse('我收到你的消息了：' + JSON.stringify(request));
-
-    } else if (request.cmd === 'iBtnGoogleDropCSV') {
-
-        console.log("download 下拉词 csv");
-        let content = dropArr.join("\n");
-        downLoad(content, "下拉词.csv");
-        sendResponse('我收到你的消息了：' + JSON.stringify(request));
-
-    } else if (request.cmd === 'iBtnGoogleDropCSVMobile') {
+    } else if (request.cmd === 'iBtnDownloadDropCSV') {
 
         console.log("download Mobile 下拉词 csv");
         let content = dropArr.join("\n");

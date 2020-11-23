@@ -18,29 +18,22 @@ $('#iBtnQuestionInfo').click(e => {
 $('#iBtnBaiduDrop').click(e => {
 	sendMessageToContentScript({cmd:'iBtnBaiduDrop'}, null)
 });
-$('#iBtnBaiduDropCSV').click(e => {
-	sendMessageToContentScript({cmd:'iBtnBaiduDropCSV'}, null)
-});
 
 $('#iBtnBaiduDropMobile').click(e => {
 	sendMessageToContentScript({cmd:'iBtnBaiduDropMobile'}, null)
 });
-$('#iBtnBaiduDropCSVMobile').click(e => {
-	sendMessageToContentScript({cmd:'iBtnBaiduDropCSVMobile'}, null)
-});
+
 //Google
 $('#iBtnGoogleDrop').click(e => {
 	sendMessageToContentScript({cmd:'iBtnGoogleDrop'}, null)
-});
-$('#iBtnGoogleDropCSV').click(e => {
-	sendMessageToContentScript({cmd:'iBtnGoogleDropCSV'}, null)
 });
 
 $('#iBtnGoogleDropMobile').click(e => {
 	sendMessageToContentScript({cmd:'iBtnGoogleDropMobile'}, null)
 });
-$('#iBtnGoogleDropCSVMobile').click(e => {
-	sendMessageToContentScript({cmd:'iBtnGoogleDropCSVMobile'}, null)
+
+$('#iBtnDownloadDropCSV').click(e => {
+	sendMessageToContentScript({cmd:'iBtnDownloadDropCSV'}, null)
 });
 
 // 监听来自content-script的消息
