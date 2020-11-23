@@ -96,8 +96,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     } else if (request.cmd === 'iBtnBaiduDrop') {
         dropArr = [];
-        lsc('#form', () => {
-            let drs = document.querySelector('#form > div > ul');
+        let cs = '#form';
+        let list = '#form > div > ul';
+        lsc(cs, list, () => {
+            let drs = document.querySelector(list);
             if (drs !== null) {
                 drs.childNodes.forEach(item => {
                     let kw = item.getAttribute('data-key');
@@ -113,8 +115,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     } else if (request.cmd === 'iBtnBaiduDropMobile') {
         dropArr = [];
         let cs = '#index-box > div > div.suggest-panel > div.suggest-content';
-        lsc(cs, () => {
-            let drs = document.querySelector(cs).querySelectorAll('button');
+        let list = cs;
+        lsc(cs, list, () => {
+            let drs = document.querySelector(list).querySelectorAll('button');
             if (drs !== null) {
                 drs.forEach(item => {
                     console.log(item.innerText)
@@ -126,6 +129,18 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         });
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
 
+    } else if (request.cmd === 'iBtnGoogleDrop') {
+        dropArr = [];
+        let cs = '#tsf > div:nth-child(2) > div.A8SBwf.emcav > div.UUbT9 > div.aajZCb > ul';
+        lsc(cs, cs, dropListGoogle);
+        sendResponse('我收到你的消息了：' + JSON.stringify(request));
+
+    } else if (request.cmd === 'iBtnGoogleDropMobile') {
+        dropArr = [];
+        let cs = '#tsf > div:nth-child(2) > div.A7Yvie.emca.emcav.Sl6fgd > div.UUbT9 > ul';
+        lsc(cs, cs, dropListGoogle);
+        sendResponse('我收到你的消息了：' + JSON.stringify(request));
+
     } else if (request.cmd === 'iBtnBaiduDropCSV') {
 
         console.log("download 下拉词 csv");
@@ -134,6 +149,20 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
 
     } else if (request.cmd === 'iBtnBaiduDropCSVMobile') {
+
+        console.log("download Mobile 下拉词 csv");
+        let content = dropArr.join("\n");
+        downLoad(content, "Mobile下拉词.csv");
+        sendResponse('我收到你的消息了：' + JSON.stringify(request));
+
+    } else if (request.cmd === 'iBtnGoogleDropCSV') {
+
+        console.log("download 下拉词 csv");
+        let content = dropArr.join("\n");
+        downLoad(content, "下拉词.csv");
+        sendResponse('我收到你的消息了：' + JSON.stringify(request));
+
+    } else if (request.cmd === 'iBtnGoogleDropCSVMobile') {
 
         console.log("download Mobile 下拉词 csv");
         let content = dropArr.join("\n");
@@ -156,6 +185,20 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         sendResponse('我收到你的消息了：' + JSON.stringify(request));
     }
 });
+
+//google drop list
+function dropListGoogle(list) {
+    let drs = document.querySelector(list);
+    if (drs !== null) {
+        drs.childNodes.forEach(item => {
+            let kw = item.innerText;
+            console.log(kw);
+            if (dropArr.indexOf(kw) < 0) {
+                dropArr.push(kw);
+            }
+        })
+    }
+}
 
 function sim() {
     let count = 0;
@@ -243,7 +286,7 @@ function tag() {
 }
 
 
-function lsc(cs, parse) {
+function lsc(cs, list, parse) {
     console.log(lsc, cs);
 
     // 选择需要观察变动的节点
@@ -260,7 +303,7 @@ function lsc(cs, parse) {
 
         for (let mutation of mutationsList) {
             console.log(mutation.type);
-            parse();
+            parse(list);
         }
     };
 

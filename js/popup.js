@@ -28,6 +28,20 @@ $('#iBtnBaiduDropMobile').click(e => {
 $('#iBtnBaiduDropCSVMobile').click(e => {
 	sendMessageToContentScript({cmd:'iBtnBaiduDropCSVMobile'}, null)
 });
+//Google
+$('#iBtnGoogleDrop').click(e => {
+	sendMessageToContentScript({cmd:'iBtnGoogleDrop'}, null)
+});
+$('#iBtnGoogleDropCSV').click(e => {
+	sendMessageToContentScript({cmd:'iBtnGoogleDropCSV'}, null)
+});
+
+$('#iBtnGoogleDropMobile').click(e => {
+	sendMessageToContentScript({cmd:'iBtnGoogleDropMobile'}, null)
+});
+$('#iBtnGoogleDropCSVMobile').click(e => {
+	sendMessageToContentScript({cmd:'iBtnGoogleDropCSVMobile'}, null)
+});
 
 // 监听来自content-script的消息
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)

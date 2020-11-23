@@ -26,7 +26,7 @@
 	"content_scripts": 
 	[
 		{
-			"matches": ["http://*.zhihu.com/*", "https://*.zhihu.com/*","http://*.baidu.com/*", "https://*.baidu.com/*"],
+			"matches": ["http://*.zhihu.com/*", "https://*.zhihu.com/*","http://*.baidu.com/*", "https://*.baidu.com/*","http://*.google.com/*", "https://*.google.com/*"],
 			// "<all_urls>" 表示匹配所有地址
 			// "matches": ["<all_urls>"],
 			// 多个JS按顺序注入
