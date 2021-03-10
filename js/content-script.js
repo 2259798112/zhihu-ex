@@ -103,8 +103,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             if (drs !== null) {
                 drs.childNodes.forEach(item => {
                     let kw = item.getAttribute('data-key');
-                    console.log(kw);
                     if (dropArr.indexOf(kw) < 0) {
+                        console.log(kw);
                         dropArr.push(kw);
                     }
                 })
@@ -120,8 +120,43 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             let drs = document.querySelector(list).querySelectorAll('button');
             if (drs !== null) {
                 drs.forEach(item => {
-                    console.log(item.innerText)
                     if (dropArr.indexOf(item.innerText) < 0) {
+                        console.log(item.innerText)
+                        dropArr.push(item.innerText);
+                    }
+                })
+            }
+        });
+        sendResponse('我收到你的消息了：' + JSON.stringify(request));
+
+    }else if (request.cmd === 'iBtnSogouDrop') {
+        dropArr = [];
+        let cs = '#vl > div > ul';
+        let list = cs;
+        lsc(cs, list, () => {
+            let drs = document.querySelector(list);
+            if (drs !== null) {
+                drs.childNodes.forEach(item => {
+                    let kw = item.innerText;
+                    if (kw !== null && dropArr.indexOf(kw) < 0) {
+                        console.log(kw);
+                        dropArr.push(kw);
+                    }
+                })
+            }
+        });
+        sendResponse('我收到你的消息了：' + JSON.stringify(request));
+
+    } else if (request.cmd === 'iBtnSogouDropMobile') {
+        dropArr = [];
+        let cs = '#sug_wraper';
+        let list = cs;
+        lsc(cs, list, () => {
+            let drs = document.querySelector(list).querySelectorAll('li[data-type="result"]')
+            if (drs !== null) {
+                drs.forEach(item => {
+                    if (item.innerText !== null && dropArr.indexOf(item.innerText) < 0) {
+                        console.log(item.innerText)
                         dropArr.push(item.innerText);
                     }
                 })
@@ -278,10 +313,10 @@ function lsc(cs, list, parse) {
     // 当观察到变动时执行的回调函数
     const callback = function (mutationsList, observer) {
         // Use traditional 'for loops' for IE 11
-        console.log('callback');
+        // console.log('callback');
 
         for (let mutation of mutationsList) {
-            console.log(mutation.type);
+            // console.log(mutation.type);
             parse(list);
         }
     };

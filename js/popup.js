@@ -22,6 +22,13 @@ $('#iBtnBaiduDrop').click(e => {
 $('#iBtnBaiduDropMobile').click(e => {
 	sendMessageToContentScript({cmd:'iBtnBaiduDropMobile'}, null)
 });
+$('#iBtnSogouDrop').click(e => {
+	sendMessageToContentScript({cmd:'iBtnSogouDrop'}, null)
+});
+
+$('#iBtnSogouDropMobile').click(e => {
+	sendMessageToContentScript({cmd:'iBtnSogouDropMobile'}, null)
+});
 
 //Google
 $('#iBtnGoogleDrop').click(e => {
